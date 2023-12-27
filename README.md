@@ -25,6 +25,6 @@ et les limitations de l’API.
 • Offrir la possibilité de stocker les stratégies soumises et de planifier
 des backtests à des intervalles spécifiés par l’utilisateur.
 
-## Instalation 
+## Installation 
 
 ## Utilisation
