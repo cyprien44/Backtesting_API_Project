@@ -11,10 +11,12 @@ Le but de ce projet est de développer une API permettant aux utilisateurs de so
 
 ### 1. Soumission de Fonctions de Trading :
 • L'utilisateur soumet une stratégie de trading que notre système va évaluer par backtesting sur des données de marché historiques. La fonction de trading prend la forme d'un script python et de plusieurs inputs afin de mesurer la performance de la stratégie.
+
 • Le système contrôle les fonctions soumises pour garantir leur exécution sûre et conforme lors du backtesting.
 
 ### 2. Backtesting :
 • L'analyse de la performance par backtesting est réalisé à partir de données de marché historiques des actifs de l'univers d'investissement. Nous utilisons les barres de prix OHLCV afin de calculer les différents indicateurs demandés par l'utilisateur.
+
 • La réponse de l'API fournit des statistiques et des analyses de performance pour la stratégie testée.
 
 ### 3. Stockage et Exécution Programmée :
@@ -23,7 +25,7 @@ Le but de ce projet est de développer une API permettant aux utilisateurs de so
 
 ## Utilisation
 
-Les focntionnalités de backtesting de stratégie de trading algorithmique sont utilisable directement via une requête POST à l'API développée. Cette API prend en entrée plusieurs paramètres afin de renvoyer les indicateurs de performances souhaités à l'utilisateur.
+Les fonctionnalités de backtesting de stratégie de trading algorithmique sont utilisable directement via une requête POST à l'API développée. Cette API prend en entrée plusieurs paramètres afin de renvoyer les indicateurs de performances souhaités à l'utilisateur.
 
 Les paramètres d'entrée de l'API sont collectés par un dictionnaire json puis inséré dans la requête de l'API comme suit :
 
