@@ -34,17 +34,17 @@ response = requests.post(url, data=params)
 
 Les arguments pris en compte sont les suivants :
 - code : script python qui applique la stratégie de trading. La stratégie de trading doit prendre en entrée des données historiques d'actifs et renvoyer la position sur la prochaine période. Les données historiques peuvent être consultées en appelant une fonction externe "load_data(asset, start, end)" et qui renvoie un dataframe avec une ligne par jour de trading et les variables suivantes :
-    - Open Time (t): The start time of the candlestick.
-    - Open (o): The opening price of the candlestick.
-    - High (h): The highest price during the candlestick's time period.
-    - Low (l): The lowest price during the candlestick's time period.
-    - Close (c): The closing price of the candlestick.
-    - Volume (v): The total traded base asset volume during the candlestick's time period.
-    - Close Time (T): The closing time of the candlestick.
-    - Quote Asset Volume (q): The total traded quote asset volume during the candlestick's time period.
-    - Number of Trades (n): The number of trades that occurred during the candlestick's time period.
-    - Taker Buy Base Asset Volume (V): The total traded base asset volume attributed to taker buys during the candlestick's time period.
-    - Taker Buy Quote Asset Volume (Q): The total traded quote asset volume attributed to taker buys during the candlestick's time period.
+    - Open Time (t) : L’heure de début du chandelier.
+    - Open (o) : Le prix d'ouverture du chandelier.
+    - High (h) : Le prix le plus élevé pendant la période du chandelier.
+    - Low (l) : Le prix le plus bas pendant la période du chandelier.
+    - Close (c) : Le prix de clôture du chandelier.
+    - Volume (v) : Le volume total des actifs de base pendant la période du chandelier.
+    - Close Time (T) : L’heure de fermeture du chandelier.
+    - Quote Asset Volume (q) : Le volume total des actifs de cotation pendant la période du chandelier.
+    - Number of Trades (n) : nombre de transactions effectuées pendant la période du chandelier.
+    - Taker Buy Base Asset Volume (V) : volume total d'actifs de base attribué aux achats des taker au cours de la période du chandelier.
+    - Taker Buy Quote Asset Volume (Q) : volume total d'actifs de cotation attribué aux achats des taker au cours de la période du chandelier.
 - indicateurs : liste d'indicateurs parmis les suivants : return (rendement moyen), vol (volatilité du portefeuille), sharp_ratio (ratio de sharp de l'investissement) et beta (sensibilité de la valeur de l'actif aux variations du marché)
 - start : début de la période de backtesting au format "dd-mm-aaaa"
 - end : fin de la période de backtesting au format "dd-mm-aaaa"
