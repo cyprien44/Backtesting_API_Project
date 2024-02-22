@@ -1,7 +1,5 @@
 import requests
-import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 
 
 json_data = {
@@ -12,49 +10,46 @@ json_data = {
 }
 
 
-def fetch_binance_data(asset, start, end):
+def fetch_binance_data(asset, start_time, end_time):
     api_url = 'https://api.binance.com/api/v3/klines'
-
-    # Convertir les temps en millisecondes
-    start = int(start.timestamp() * 1000)
-    end = int(end.timestamp() * 1000)
-
+    start = int(start_time.timestamp() * 1000)
+    end = int(end_time.timestamp() * 1000)
+    all_data = []
     params = {
         'symbol': asset,
         'interval': '1h',
-        'startTime': start,
-        'endTime': end,
-        'limit': 100000
+        'limit': 1000
     }
-
-    response = requests.get(api_url, params=params)
-
-    if response.status_code == 200:
-        data = response.json()
-        df = pd.DataFrame(data, columns=['Open Time', 'Open', 'High', 'Low', 'Close', 'Volume', 'Close Time',
+    while start < end:
+        params['startTime'] = start
+        response = requests.get(api_url, params=params)
+        if response.status_code == 200:
+            data = response.json()
+            all_data.extend(data)
+            start = int(data[-1][0]) + 1
+        else:
+            print("Erreur lors de la récupération des données:", response.status_code)
+            return None
+    df = pd.DataFrame(all_data, columns=['Open Time', 'Open', 'High', 'Low', 'Close', 'Volume', 'Close Time',
                                          'Quote Asset Volume', 'Number of Trades', 'Taker Buy Base Asset Volume',
                                          'Taker Buy Quote Asset Volume', 'ignore'])
-        df['Open Time'] = pd.to_datetime(df['Open Time'], unit='ms')
-        df['Close Time'] = pd.to_datetime(df['Close Time'], unit='ms')
-        df.drop(['ignore'], axis=1, inplace=True)
-        return df
-    else:
-        print("Erreur lors de la récupération des données:", response.status_code)
-        return None
+    df['Open Time'] = pd.to_datetime(df['Open Time'], unit='ms')
+    df['Close Time'] = pd.to_datetime(df['Close Time'], unit='ms')
+    df.drop(['ignore'], axis=1, inplace=True)
+    df = df[(df['Open Time'] >= start_time) & (df['Open Time'] < end_time)]
+    return df
 
 
 def load_all_data(assets, start, end):
     data = dict()
     for asset in assets:
-        data[asset] = fetch_binance_data(asset=f"{asset}USDT", start=start, end=end)
+        data[asset] = fetch_binance_data(asset=f"{asset}USDT", start_time=start, end_time=end)
     return data
 
 
 if __name__ == "__main__":
-    start_date = pd.Timestamp(json_data["start"])
-    end_date = pd.Timestamp(json_data["end"])
+    start = pd.Timestamp(json_data["start"])
+    end = pd.Timestamp(json_data["end"])
     assets = json_data["assets"]
-    dict_data = load_all_data(assets=assets, start=start_date, end=end_date)
-    print(dict_data)
-
-
+    dict_data = load_all_data(assets=assets, start=start, end=end)
+    print(dict_data["BTC"])
